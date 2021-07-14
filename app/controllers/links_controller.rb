@@ -1,4 +1,7 @@
 class LinksController < ApplicationController
+  def initialize()
+
+  end
   def index
 
   end
@@ -15,9 +18,14 @@ class LinksController < ApplicationController
     end
 
     # ユーザー情報をセット
-    setUser(current_user.id)
+    result = insert(current_user.id,params[:title],params[:body],params[:image])
 
-    @Token = Token.find_by(user_id: getUser.id)
+
+    @inserted = Message.find(result)
+
+
+
+    @Token = Token.find_by(user_id: current_user.id)
 
     token = @Token.messaging_token
 
@@ -33,17 +41,23 @@ class LinksController < ApplicationController
         'Accept'=>'application/json'
     }
     send_message = params[:title]
+
+    puts @inserted.image
     send_message = send_message + "\n" + params[:body]
     # Body
     params = {"messages" => [{"type" => "text", "text" => send_message}]}
 
+
+    paramsImg = {"messages" => [{"type" => "image", "originalContentUrl" => @inserted.image.to_s, 'previewImageUrl' => @inserted.image.to_s}]}
+
+    response = http.post(uri.path, paramsImg.to_json, headers)
     response = http.post(uri.path, params.to_json, headers)
+
+
   end
 
   private
-
   # リダイレクト処理
-  private
   def is_login()
     if user_signed_in? then
       return true
@@ -52,20 +66,14 @@ class LinksController < ApplicationController
     end
   end
 
-  private
   def redirect_method()
     redirect_to '/users/sign_in'
   end
 
-  private
-  def getUser
-    @user
+  def insert(user_id,title, body, image)
+    result = Message.create(user_id: user_id, title: title, body: body, image: image)
+    return result.id
   end
 
-  # ユーザーセット
-  private
-  def setUser(id)
-    @user = User.find(id)
-  end
   
 end
