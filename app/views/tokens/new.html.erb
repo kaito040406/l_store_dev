@@ -1,0 +1,11 @@
+<%= form_with url: user_tokens_path do |f| %>
+  <%= f.label :chanel_id, 'チャネルID' %>
+  <%= f.text_field :chanel_id %>
+  <%= f.label :chanel_secret, 'チャネルシークレット' %>
+  <%= f.text_field :chanel_secret %>
+  <%= f.label :messaging_token, 'メッセージトークン' %>
+  <%= f.text_field :messaging_token %>
+  <%= f.label :login_token, 'ログイントークン' %>
+  <%= f.text_field :login_token %>
+  <%= f.submit "送信" %>
+<% end %>

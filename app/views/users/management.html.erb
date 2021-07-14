@@ -1,0 +1,32 @@
+<section id="user-detail" class="scroll-page bg-white">
+  <div class="page-header">
+    <h1>会員情報</h1>
+  </div>
+  <table>
+    <tr>
+      <th>お名前</th>
+      <td><%= current_user.name %>様</td>
+    </tr>
+  </table>
+</section>
+<% if @exists_check  then %>
+  <%= form_with url: links_path do |f| %>
+    <%= f.label :title, 'タイトル' %>
+    <%= f.text_field :title %>
+    <%= f.label :body, 'メッセージ' %>
+    <%= f.text_area :body %>
+    <%= f.submit "送信" %>
+  <% end %>
+<% else %>
+  トークン情報を登録してください
+<% end %>
+<div>
+  <%= link_to new_user_token_path(current_user.id) do %>
+    設定
+  <% end %>
+</div>
+<div>
+  <%# <%= link_to 　do %> 
+    ログアウト
+  <%# <% end %> 
+</div>
