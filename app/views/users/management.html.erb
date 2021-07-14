@@ -11,6 +11,8 @@
 </section>
 <% if @exists_check  then %>
   <%= form_with url: links_path do |f| %>
+    <%= f.label :image, '画像' %>
+    <%= f.file_field :image ,accept: 'image/jpg,image/png' %>
     <%= f.label :title, 'タイトル' %>
     <%= f.text_field :title %>
     <%= f.label :body, 'メッセージ' %>

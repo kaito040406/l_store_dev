@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_07_14_044632) do
+ActiveRecord::Schema.define(version: 2021_07_14_060259) do
 
   create_table "active_storage_attachments", charset: "utf8", force: :cascade do |t|
     t.string "name", null: false
@@ -40,6 +40,16 @@ ActiveRecord::Schema.define(version: 2021_07_14_044632) do
     t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
   end
 
+  create_table "messages", charset: "utf8", force: :cascade do |t|
+    t.bigint "user_id"
+    t.string "title", null: false
+    t.string "body", null: false
+    t.string "image"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["user_id"], name: "index_messages_on_user_id"
+  end
+
   create_table "tokens", charset: "utf8", force: :cascade do |t|
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
@@ -67,5 +77,6 @@ ActiveRecord::Schema.define(version: 2021_07_14_044632) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "messages", "users"
   add_foreign_key "tokens", "users"
 end
