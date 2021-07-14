@@ -72,3 +72,5 @@ gem 'dotenv-rails'
 
 gem 'mini_magick'
 gem 'aws-sdk-s3'
+gem 'fog-aws'
+gem "carrierwave"
