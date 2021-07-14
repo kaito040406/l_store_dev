@@ -2,33 +2,23 @@ class TokensController < ApplicationController
   before_action :authenticate_user!
   # IDがあるかを確認する回数
   @@recount = 5
-  def initialize()
 
-  end
   def new
     @token = Token.new
   end
 
   def create
-    setMsgToken(params[:messaging_token])
-    setLoginToken(params[:login_token])
-    setChanelID(params[:chanel_id])
-    setChanelSecret(params[:chanel_secret])
-    setAccessId(make_random_id())
+    @token = Token.new(token_params)
+    @token.user_id = current_user.id
+    @token.access_id = make_random_id()
 
-    # もうすでに登録されているかを確認
-    if Token.exists?(user_id: current_user.id) then
-      # 登録されているなたアップデートアクションに移動
+    if Token.exists?(user_id: current_user.id)
       update()
-    
-    # 登録されていない場合
     else
-      # インサートする結果をbool型で受け取る
-      result = insert(current_user.id, getMsgToken(), getLoginToken(), getChanelID(), getChanelSecret(), getAccessId())
-      if result then
+      if @token.save
+        redirect_to links_path
       else
-        redirect_to '/'
-        return
+        render :new
       end
     end
   end
@@ -43,11 +33,11 @@ class TokensController < ApplicationController
     end
   end
 
-# -----------------------------------
-# 以下プライベート用の関数
 
-  # リダイレクト処理
   private
+  def token_params
+    params.require(:token).permit(:chanel_id, :chanel_secret, :messaging_token, :login_token)
+  end
 
   def is_login()
     if user_signed_in? then
