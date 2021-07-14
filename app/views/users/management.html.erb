@@ -23,7 +23,7 @@
   トークン情報を登録してください
 <% end %>
 <div>
-  <%= link_to new_user_token_path(current_user.id) do %>
+  <%= link_to new_token_path do %>
     設定
   <% end %>
 </div>
@@ -32,3 +32,6 @@
     ログアウト
   <%# <% end %> 
 </div>
+
+
+<%= react_component("HelloWorld", { greeting: "Hello" }) %>

@@ -1,11 +1,23 @@
-<%= form_with url: user_tokens_path do |f| %>
-  <%= f.label :chanel_id, 'チャネルID' %>
-  <%= f.text_field :chanel_id %>
-  <%= f.label :chanel_secret, 'チャネルシークレット' %>
-  <%= f.text_field :chanel_secret %>
-  <%= f.label :messaging_token, 'メッセージトークン' %>
-  <%= f.text_field :messaging_token %>
-  <%= f.label :login_token, 'ログイントークン' %>
-  <%= f.text_field :login_token %>
+<%= form_with model: @token, local: true do |f| %>
+  <div>
+    <%= f.label :chanel_id, 'チャネルID' %>
+    <%= f.text_field :chanel_id, required: true, maxlength: Token::CHANEL_ID_LENGTH %>
+  </div>
+
+  <div>
+    <%= f.label :chanel_secret, 'チャネルシークレット' %>
+    <%= f.text_field :chanel_secret, required: true, maxlength: Token::CHANEL_SECRET_LENGTH %>
+  </div>
+
+  <div>
+    <%= f.label :messaging_token, 'メッセージトークン' %>
+    <%= f.text_field :messaging_token, required: true, maxlength: Token::MESSAGING_TOKEN_LENGTH %>
+  </div>
+
+  <div>
+    <%= f.label :login_token, 'ログイントークン' %>
+    <%= f.text_field :login_token, required: true, maxlength: Token::LOGIN_TOKEN_LENGTH %>
+  </div>
+
   <%= f.submit "送信" %>
 <% end %>
