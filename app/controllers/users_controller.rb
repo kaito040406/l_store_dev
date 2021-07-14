@@ -1,18 +1,12 @@
 class UsersController < ApplicationController
-  def initialize()
-
-  end
+  before_action :authenticate_user!
 
   def management
-    if user_signed_in? then
-      @user = User.find(current_user.id)
-      if Token.exists?(user_id: current_user.id) then
-        @exists_check=true;
-      else
-        @exists_check=false;
-      end
+    @user = User.find(current_user.id)
+    if Token.exists?(user_id: current_user.id)
+      @exists_check=true;
     else
-      redirect_to '/users/sign_in'
+      @exists_check=false;
     end
   end
 
