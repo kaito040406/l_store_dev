@@ -26,7 +26,7 @@
   <%= link_to '設定', new_token_path %>
 </div>
 <div>
-  <%= link_to "ログアウト", destroy_user_session_path, data: { confirm: "ログアウトしますか？" } %>
+  <%= link_to "ログアウト", destroy_user_session_path %>
 </div>
 
 <%= react_component("HelloWorld", { greeting: "Hello" }) %>
