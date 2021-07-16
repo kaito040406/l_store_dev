@@ -10,7 +10,7 @@ Rails.application.routes.draw do
   resources :tokens
 
   get "management", to: "users#management", as: :user_management
-  get 'links', to: 'links#index'
-  post 'links', to: 'links#create'
+  get 'messages', to: 'messages#index'
+  post 'messages', to: 'messages#create'
 
 end
